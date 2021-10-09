@@ -1,0 +1,18 @@
+const fs = require("fs");
+
+module.exports = (client, Discord) => {
+  const eventFolders = fs.readdirSync("./events");
+  for (const folder of eventFolders) {
+    const eventFiles = fs
+      .readdirSync(`./events/${folder}`)
+      .filter((e) => e.endsWith(".js"));
+    for (const file of eventFiles) {
+      const event = require(`../events/${folder}/${file}`);
+      if (event.once) {
+        client.once(event.name, (...args) => event.run(...args, client, Discord));
+      } else {
+        client.on(event.name, (...args) => event.run(...args, client, Discord));
+      }
+    }
+  }
+};
