@@ -9,4 +9,4 @@ client.commands = new Collection();
   require(`./handlers/${handler}`)(client, Discord);
 });
 
-client.login("process.env.TOKEN")
+client.login(process.env.TOKEN)
