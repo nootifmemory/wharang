@@ -10,6 +10,7 @@ module.exports = class MusicSubscription {
      */
     this.readyLock = false;
     this.queueLock = false;
+    this.vol = 0.3;
     /**
      * The VoiceConnection
      * @type {VoiceConnection}
@@ -85,7 +86,7 @@ module.exports = class MusicSubscription {
     const nextTrack = this.queue.shift();
     try {
       const resource = await nextTrack.createAudioResource();
-      resource.volume.setVolume(0.5);
+      resource.volume.setVolume(this.vol);
       await wait(this.audioPlayer.play(resource));
       this.queueLock = false;
     } catch (error) {

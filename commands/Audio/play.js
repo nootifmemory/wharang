@@ -3,7 +3,7 @@ const Track = require("./src/track");
 const Voice = require("@discordjs/voice");
 module.exports = {
   name: "play",
-  aliases: ["skip", "queue", "pause", "resume", "leave", "stop"],
+  aliases: ["skip", "queue", "pause", "resume", "leave", "stop", "vol"],
   cooldown: 0,
   description: "Advanced music bot",
   async run(client, message, args, Discord, cmd) {
@@ -53,6 +53,10 @@ module.exports = {
           console.warn(error);
           await message.channel.send("sai sai");
         }
+        break;
+      case "vol":
+        subscription.vol = args[0];
+        await message.channel.send(`Đã thay đổi volume thành ***${args[0]}*** ( Giá trị mặc định là 0.3 )`);
         break;
       case "skip":
         if (subscription) {
