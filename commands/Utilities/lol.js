@@ -16,14 +16,15 @@ module.exports = {
       dateCount: 300
     };
     let leagueProfile = await getleagueProfile(options.playerName, options.region);
-    if (!leagueProfile) return message.channel.send('No record');
+    if (!leagueProfile) return message.channel.send('No player record');
     console.log(leagueProfile);
     switch (cmd) {
       case 'rank':
+        if (leagueProfile.ranks.lenght == 0) return message.channel.send('No rank');
         let rank = leagueProfile.ranks[0];
         let embed = new MessageEmbed()
-          .setTitle(`${leagueProfile.summonerName}'s Rank`)
           .setColor('#0099FF')
+          .setTitle(`${leagueProfile.summonerName}'s Rank`)
           .setAuthor(leagueProfile.summonerName, `https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/profileicon/${leagueProfile.profileIconId}.png`)
           .setThumbnail(`https://wharang.fun/rank/${rank.tier}.png`)
           .addField('Rank', `***${rank.tier} ${rank.rank}***`)
