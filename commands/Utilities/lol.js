@@ -20,13 +20,13 @@ module.exports = {
     console.log(leagueProfile);
     switch (cmd) {
       case 'rank':
-        if (leagueProfile.ranks.lenght == 0) return message.channel.send('No rank');
+        if (leagueProfile.ranks.length == 0) return message.channel.send('No rank');
         let rank = leagueProfile.ranks[0];
         let embed = new MessageEmbed()
           .setColor('#0099FF')
           .setTitle(`${leagueProfile.summonerName}'s Rank`)
           .setAuthor(leagueProfile.summonerName, `https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/profileicon/${leagueProfile.profileIconId}.png`)
-          // .setThumbnail(`https://wharang.fun/rank/${rank.tier}.png`)
+          .setThumbnail(`https://wharang.fun/rank/${rank.tier}.png`)
           .addField('Rank', `***${rank.tier} ${rank.rank}***`)
           .addField('League Points', `${rank.leaguePoints}`)
           .addField('\u200B', '\u200B')
