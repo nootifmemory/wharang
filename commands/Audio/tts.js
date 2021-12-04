@@ -59,7 +59,7 @@ module.exports = {
         subscription.enqueue(
           await Speech.from(e, {
             onStart: () => {
-              console.log(`Playing TTS`);
+              console.log(`Playing TTS ${e}`);
               try {
                 clearTimeout(subscription.timeout);
               } catch (error) {
@@ -69,6 +69,7 @@ module.exports = {
             onFinish: () => {
               console.log(`Finished TTS`);
               subscription.timeout = setTimeout(() => {
+                console.log("Timeout");
                 subscription.voiceConnection.destroy();
                 client.subscriptions.delete(message.guildId);
               }, 60 * 60 * 1000); // 1 hour

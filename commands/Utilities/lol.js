@@ -26,7 +26,7 @@ module.exports = {
           .setColor('#0099FF')
           .setTitle(`${leagueProfile.summonerName}'s Rank`)
           .setAuthor(leagueProfile.summonerName, `https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/profileicon/${leagueProfile.profileIconId}.png`)
-          .setThumbnail(`https://wharang.fun/rank/${rank.tier}.png`)
+          // .setThumbnail(`https://wharang.fun/rank/${rank.tier}.png`)
           .addField('Rank', `***${rank.tier} ${rank.rank}***`)
           .addField('League Points', `${rank.leaguePoints}`)
           .addField('\u200B', '\u200B')

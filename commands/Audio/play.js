@@ -47,6 +47,7 @@ module.exports = {
             onFinish: () => {
               console.log(`Finished playing ${track.title}`);
               subscription.timeout = setTimeout(() => {
+                console.log("Timeout");
                 subscription.voiceConnection.destroy();
                 client.subscriptions.delete(message.guildId);
               }, 60 * 60 * 1000); // 1 hour
