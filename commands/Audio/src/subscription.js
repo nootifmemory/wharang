@@ -3,7 +3,7 @@ const { promisify } = require("util");
 const wait = promisify(setTimeout);
 
 module.exports = class MusicSubscription {
-  constructor(voiceConnection) {
+  constructor(voiceConnection, client) {
     /**
      * @type {boolean}
      * @private
@@ -18,13 +18,10 @@ module.exports = class MusicSubscription {
     this.voiceConnection = voiceConnection;
     this.audioPlayer = Voice.createAudioPlayer();
     this.queue = [];
-    // this.resource = resource;
+    this.client = client;
     /**
-     * The VoiceChannel or StageChannel
      * @type {VoiceChannel | StageChannel}
      */
-    // this.channel = channel;
-    // this.paused = paused;
     this.voiceConnection.on("stateChange", async (oldState, newState) => {
       if (newState.status === Voice.VoiceConnectionStatus.Disconnected) {
         if (newState.reason === Voice.VoiceConnectionDisconnectReason.WebSocketClose && newState.closeCode === 4014) {
