@@ -86,8 +86,7 @@ module.exports = class Track {
         methods.onFinish();
       },
       onError(error) {
-        warpedMethods.onError = () => {};
-        methods.onError(error);
+        warpedMethods.onError = (error) => {console.log(error)};
       },
     };
 

@@ -8,7 +8,7 @@ module.exports = {
   name: "tts",
   aliases: ["t", "ttso", "to"],
   cooldown: 0,
-  description: "Advanced music bot",
+  description: "Advanced speech bot",
   async run(client, message, args, Discord, cmd) {
     const channel = message.member.voice.channel;
     if (!channel) return message.channel.send("Vui lòng vào 1 kênh chat voice");
@@ -58,16 +58,26 @@ module.exports = {
       try {
         subscription.enqueue(
           await Speech.from(e, {
-            onStart() {
-              console.log(`TTS Start`);
+            onStart: () => {
+              console.log(`Playing TTS`);
+              try {
+                clearTimeout(subscription.timeout);
+              } catch (error) {
+                console.warn(error);
+              }
             },
-            onFinish() {
-              console.log(`TTS Finished`);
+            onFinish: () => {
+              console.log(`Finished TTS`);
+              subscription.timeout = setTimeout(() => {
+                subscription.voiceConnection.destroy();
+                client.subscriptions.delete(message.guildId);
+              }, 60 * 60 * 1000); // 1 hour
             },
-            onError(error) {
-              console.log(`TTS Error`);
-              console.warn(error);
-            },
+            onError: (error) => {
+              console.log(`Error playing TTS`, error);
+              message.channel.send(`Lỗi khi phát TTS`);
+            }
+
           })
         );
       } catch (err) {

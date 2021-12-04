@@ -36,16 +36,26 @@ module.exports = {
 
         try {
           const track = await Track.from(args, {
-            onStart() {
+            onStart: () => {
               console.log(`Playing ${track.title}`);
+              try {
+                clearTimeout(subscription.timeout);
+              } catch (error) {
+                console.warn(error);
+              }
             },
-            onFinish() {
-              console.log(`Finished ${track.title}`);
+            onFinish: () => {
+              console.log(`Finished playing ${track.title}`);
+              subscription.timeout = setTimeout(() => {
+                subscription.voiceConnection.destroy();
+                client.subscriptions.delete(message.guildId);
+              }, 60 * 60 * 1000); // 1 hour
             },
-            onError(error) {
-              console.log(`Error ${track.title}`);
-              console.warn(error);
-            },
+            onError: (error) => {
+              console.log(`Error playing ${track.title}`, error);
+              message.channel.send(`Lỗi khi phát ${track.title}`);
+            }
+
           });
           subscription.enqueue(track);
           await message.channel.send(`Đã thêm ***${track.title}***`);
